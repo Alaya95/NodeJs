@@ -6,11 +6,16 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "prime": "node lesson1.js"
   },
+  "bin": {
+    "reader": "node cli.js"
+  },
   "author": "",
   "license": "ISC",
   "description": "",
   "keywords": [],
   "dependencies": {
-    "colors": "^1.4.0"
+    "colors": "^1.4.0",
+    "inquirer": "^8.2.0",
+    "yargs": "^17.3.0"
   }
 }
