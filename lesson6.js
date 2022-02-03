@@ -14,8 +14,10 @@
 исполняемым файлом.
 4. Для запуска программы необходимо набрать "npm run home3" в консоли. */
 
+
 const fs = require("fs");
 const path = require("path");
+
 const http = require('http');
 const url = require('url');
 const io = require('socket.io');
@@ -55,25 +57,27 @@ const users = {};
 const socket = io(app);
 
 socket.on('connection', function (socket) {
-  let userNickname = 'User' + Math.floor(Math.random() * 100)
+
+  let userNickname = 'User' + Math.floor(Math.random() * 100);
   users[socket.id] = userNickname;
-  socket.emit('SERVER_MSG', { msg: 'Hello ' + userNickname});
+  socket.emit('SERVER_MSG', { msg: 'Hello ' + userNickname });
 
   socket.on('CLIENT_MSG', (data) => {
     userNickname = getUserNickName(socket.id);
-    socket.emit('SERVER_MSG', { msg: `${userNickname}: ${data.msg}`});
-    socket.broadcast.emit('SERVER_MSG', { msg: `${userNickname}: ${data.msg}`});
+    socket.emit('SERVER_MSG', { msg: `${userNickname}: ${data.msg}` });
+    socket.broadcast.emit('SERVER_MSG', { msg: `${userNickname}: ${data.msg}` });
+
   });
 
   socket.broadcast.emit('NEW_CONN_EVENT', { msg: userNickname + ' connected' });
 
-  socket.on('disconnect', function() {
+  socket.on('disconnect', function () {
     let disconnectedUserNickname = getUserNickName(socket.id);
-    socket.broadcast.emit('SERVER_MSG', { msg: disconnectedUserNickname + ' disconnected'});
+    socket.broadcast.emit('SERVER_MSG', { msg: disconnectedUserNickname + ' disconnected' });
   });
-  socket.on('reconnect', function() {
+  socket.on('reconnect', function () {
     let reconnectedUserNickname = getUserNickName(socket.id);
-    socket.broadcast.emit('SERVER_MSG', { msg: reconnectedUserNickname + ' reconnected'});
+    socket.broadcast.emit('SERVER_MSG', { msg: reconnectedUserNickname + ' reconnected' });
   });
 
 });
@@ -83,6 +87,7 @@ app.listen(3000, 'localhost');
 function getUserNickName(socketId) {
   let userNickname = null;
   for (let key of Object.keys(users)) {
-    if (key == socketId) return userNickname = users[key];
+    if (key == socketId) return (userNickname = users[key]);
   }
 }
+
